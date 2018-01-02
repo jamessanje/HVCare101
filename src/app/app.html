@@ -1,16 +1,19 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title class="center"><img src="assets/imgs/HVC.png" height="30%" width="50%"/></ion-title>
+      <ion-title class="Sibol"><br> HVCcare</ion-title>
+      
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list class="lists">
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
     </ion-list>
+    
   </ion-content>
 
 </ion-menu>

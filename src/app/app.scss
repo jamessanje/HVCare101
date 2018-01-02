@@ -1,16 +1,34 @@
-// http://ionicframework.com/docs/theming/
+$SIDEMENU_TOP: #ee4649;
+$SIDEMENU_BOTTOM: #f6a72a;
+$SIDEMENU_TRANSPARENCY: rgba(255,255,255,0.4);
+
+.toolbar-background-md {
+    //background: -webkit-gradient(left top, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    //background: -o-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    //background: -moz-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: linear-gradient(to bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background-repeat: repeat-x;
+}
 
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+.Sibol{
+    //background-image: url('../assets/imgs/HVC.png');
+   // background-repeat: no-repeat;
+    //background-position-x: 10%;
+    //background-position-y: 100%;
+   // background-size: 22%;
+    margin-bottom: 2%;
+    margin-top: -13%;
+    text-align: center;
+}
+.lists{
+    margin-top: 0%;
+}
+
+.center{
+    background-repeat: no-repeat;
+   // background-position-x: 10%;
+    //background-position-y: 100%;
+    background-size: 20%;
+    background-position: center;
+}

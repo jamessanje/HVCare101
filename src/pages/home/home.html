@@ -3,16 +3,91 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>
+    <ion-icon name="home"></ion-icon>
+      Home
+      
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+<ion-content padding class="bg">
+  <div>
+  <ion-item class="pangRelative">
+  <div class="pangRelative">
+    <img src="/assets/imgs/HVC.png" style=position:absolute; height="60" width="80">
+  </div>
+  <label>
+  <h1 class="titleLogo">Controlled Environment</h1>
+  <h1 class="titleLogo2">System for High Value Crops</h1>
+  </label>
+  </ion-item>
+  </div>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <h4 class="center">Crops To Be Monitored</h4>
+  <ion-list>
+  <ion-item>
+    <ion-label>Crop 1</ion-label>
+    <ion-select [(ngModel)]="crop1" (ionChange)="change(crop1)">
+      <ion-option>Strawberry</ion-option>
+      <ion-option>Lettuce</ion-option>
+      <ion-option>Basil</ion-option>
+      <ion-option>Beans and Peas</ion-option>
+      <ion-option>Brocolli</ion-option>
+      <ion-option>Cabbage</ion-option>
+      <ion-option>Cauliflower</ion-option>
+      <ion-option>Cucumber</ion-option>
+      <ion-option>Eggplant</ion-option>
+      <ion-option>Mangold</ion-option>
+      <ion-option>Parsley</ion-option>
+      <ion-option>Peppers</ion-option>
+      <ion-option>Tomato</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Crop 2</ion-label>
+      <ion-select [(ngModel)]="crop2" (ionChange)="change2(crop2)">
+        <ion-option>Strawberry</ion-option>
+        <ion-option>Lettuce</ion-option>
+        <ion-option>Basil</ion-option>
+        <ion-option>Beans and Peas</ion-option>
+        <ion-option>Brocolli</ion-option>
+        <ion-option>Cabbage</ion-option>
+        <ion-option>Cauliflower</ion-option>
+        <ion-option>Cucumber</ion-option>
+        <ion-option>Eggplant</ion-option>
+        <ion-option>Mangold</ion-option>
+        <ion-option>Parsley</ion-option>
+        <ion-option>Peppers</ion-option>
+        <ion-option>Tomato</ion-option>
+      </ion-select>
+  </ion-item>
+ 
+  <ion-item>
+    <ion-label>Crop 3</ion-label>
+      <ion-select [(ngModel)]="crop3" (ionChange)="change3(crop3)">
+        <ion-option>Strawberry</ion-option>
+        <ion-option>Lettuce</ion-option>
+        <ion-option>Basil</ion-option>
+        <ion-option>Beans and Peas</ion-option>
+        <ion-option>Brocolli</ion-option>
+        <ion-option>Cabbage</ion-option>
+        <ion-option>Cauliflower</ion-option>
+        <ion-option>Cucumber</ion-option>
+        <ion-option>Eggplant</ion-option>
+        <ion-option>Mangold</ion-option>
+        <ion-option>Parsley</ion-option>
+        <ion-option>Peppers</ion-option>
+        <ion-option>Tomato</ion-option>
+      </ion-select>
+  </ion-item>
+  </ion-list>
+
+  <button class="right" ion-button icon-start (click)="doConfirm()">
+    <ion-icon name='checkmark'></ion-icon>
+    Done
+  </button>
 </ion-content>
+

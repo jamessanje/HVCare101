@@ -4,31 +4,68 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { MonitorPage } from '../pages/monitor/monitor';
+import { AboutPage } from '../pages/about/about';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { HttpModule } from '@angular/http';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { FirebaseProvider } from '../providers/firebase/firebase';
+//import { GlobalVars } from '../providers/globalVars';
+import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
+
+
+
+export const firebaseConfig = {
+ /* apiKey: "AIzaSyDSMrX2C715GsFpEC06emJ8LT1fGi0mil0",
+  authDomain: "hvccareeee.firebaseapp.com",
+  databaseURL: "https://hvccareeee.firebaseio.com",
+  projectId: "hvccareeee",
+  storageBucket: "hvccareeee.appspot.com",
+  messagingSenderId: "179047373339"
+  */
+    apiKey: "AIzaSyCfOVS4fKzugZEv2o26Ir8rjkH2XwayfJo",
+    authDomain: "hvccare-5b4bc.firebaseapp.com",
+    databaseURL: "https://hvccare-5b4bc.firebaseio.com",
+    projectId: "hvccare-5b4bc",
+    storageBucket: "hvccare-5b4bc.appspot.com",
+    messagingSenderId: "706149028538"
+};
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    MonitorPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    HttpModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    MonitorPage,
+    AboutPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    FirebaseProvider,
+    GlobalVarsProvider,
+    //GlobalVars,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    
+    
+    
   ]
 })
 export class AppModule {}
