@@ -5,3 +5,9 @@ page-about {
 .AboutBG{
     background: linear-gradient(to bottom right,  #FFFFFF, #F9902D);
 }
+.aboutText{
+    position: absolute;
+    text-align: justify;
+    font-size: 1.5em;
+    top: 30%;
+}
