@@ -21,14 +21,18 @@ page-home {
     position: relative;
 }
 .logo{
-    position: relative;
-    background-image: url('../assets/imgs/HVC.png');
+    //position: relative;
+    //background-image: url('../assets/imgs/HVC.png');
     //background-position-x: 50%;
-    background-repeat: no-repeat;
+    //background-repeat: no-repeat;
     // background-position-x: 10%;
      //background-position-y: 100%;
-     background-size: 40%;
-     background-position: center;
+    // background-size: 40%;
+    // background-position: center;
+    position: relative;
+    background-image: url('../assets/imgs/HVCcare.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 .bg{
    background: linear-gradient(to bottom right,  #17EAD8, #6078EA);
@@ -43,3 +47,10 @@ page-home {
     margin-left: 38%;
    position: relative;
 }
+.chart-containerHome {
+    position: relative;
+    margin: auto;
+    height: 60vh;
+    width: 95vw;
+    margin-left: -5%;
+  }

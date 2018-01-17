@@ -3,6 +3,7 @@ import { NavController} from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Chart } from 'chart.js';
 
+Chart.defaults.global.defaultFontColor = 'black'
 
 @Component({
   selector: 'page-monitor',
@@ -11,11 +12,14 @@ import { Chart } from 'chart.js';
 
 @Injectable()
 export class MonitorPage {
-  arrData = []
+  
   result = []
+  dates = []
   timeStamp = []
-  valueHumidity = []
-  value = ["Timestamp1", "Timestamp2", "Timestamp3", "Timestamp4", "Timestamp5", "Timestamp6", "Timestamp7"]
+  valueTemp = []
+  valueHum = []
+  valuePh = []
+  Temperatures = []
   humidity = ""
   temperature = ""
   acidity = ""
@@ -34,6 +38,10 @@ export class MonitorPage {
   lineChart: any;
   lineChart2: any;
   lineChart3: any;
+
+  arrData: any;
+  arrName: any;
+
  
   constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase){
     
@@ -49,25 +57,109 @@ export class MonitorPage {
     });
     
     this.firebaseDb.list('/Crop_Data/Crop_Name').valueChanges().subscribe(snapshots=>{
-      this.arrData = snapshots;
-      this.cropName1 = this.arrData[0];
-      this.cropName2 = this.arrData[1];
-      this.cropName3 = this.arrData[2];
+      this.arrName = snapshots;
+      this.cropName1 = this.arrName[0];
+      this.cropName2 = this.arrName[1];
+      this.cropName3 = this.arrName[2];
 
   
     });
-
-    this.firebaseDb.list('Realtime_Data').snapshotChanges().map(actions =>{
+    
+    var datem = "";
+    var year = "";
+    var month = "";
+    var day = "";
+    this.firebaseDb.list('Realtime_Data', ref => ref.limitToLast(1)).snapshotChanges().map(actions =>{
       return actions.map(action => ({ key: action.key, ...action.payload.val()}));
     }).subscribe(dates => {
-      this.timeStamp = dates.map(date => date.key);
-      
-    });
+      dates.map(date => {
+        year = date.key;
+        console.log(year);
+        this.firebaseDb.list('Realtime_Data/'+year, ref => ref.limitToLast(1)).snapshotChanges().map(actions =>{
+          return actions.map(action => ({ key: action.key, ...action.payload.val()}));
+        }).subscribe(dates => {
+          dates.map(date => {
+            month = date.key;
+            console.log(month);
+            this.firebaseDb.list('Realtime_Data/'+year+'/'+month, ref => ref.limitToLast(1)).snapshotChanges().map(actions =>{
+              return actions.map(action => ({ key: action.key, ...action.payload.val()}));
+            }).subscribe(dates => {
+              dates.map(date => {
+                day = date.key;
+                console.log(day);
+                this.firebaseDb.list('Realtime_Data/'+year+'/'+month+'/'+day, ref => ref.limitToLast(1)).snapshotChanges().map(actions =>{
+                  return actions.map(action => ({ key: action.key, ...action.payload.val()}));
+                }).subscribe(dates => {
+                  dates.map(date => {
+                    datem = date.key;
+                    console.log(datem);
 
-    this.firebaseDb.list('Realtime_Data').valueChanges().subscribe(snapshots=>{
-      this.valueHumidity = snapshots;
-      this.result = this.valueHumidity.map(key => key.Measured_Humidity);
+                    
+                    this.firebaseDb.list('Realtime_Data/'+year+'/'+month+'/'+day+'/'+datem, ref => ref.limitToLast(1)).valueChanges().subscribe(snapshots=>{
+                      this.dates = [];
+                      this.result = snapshots;
+                      this.result.map(key => {
+                        this.dates.push(key.Date_Complete);
+                      });
+                    });
+                    this.firebaseDb.list('Realtime_Data/'+year+'/'+month+'/'+day+'/'+datem, ref => ref.limitToLast(5)).valueChanges().subscribe(snapshots=>{
+                      this.valueTemp = [];
+                      this.timeStamp = [];
+                      this.result = snapshots;
+                      this.result.map(key => {
+                        this.valueTemp.push(key.Measured_Temp_C);
+                        this.timeStamp.push(key.Time);
+                      });
+                    });
+                    this.firebaseDb.list('Realtime_Data/'+year+'/'+month+'/'+day+'/'+datem, ref => ref.limitToLast(5)).valueChanges().subscribe(snapshots=>{
+                      this.valueHum = [];
+                      this.timeStamp = [];
+                      this.result = snapshots;
+                      this.result.map(key => {
+                        this.valueHum.push(key.Measured_Humidity);
+                        this.timeStamp.push(key.Time);
+                      });
+                    });
+                    this.firebaseDb.list('Realtime_Data/'+year+'/'+month+'/'+day+'/'+datem, ref => ref.limitToLast(5)).valueChanges().subscribe(snapshots=>{
+                      this.valuePh = [];
+                      this.timeStamp = [];
+                      this.result = snapshots;
+                      this.result.map(key => {
+                        this.valuePh.push(key.Measured_PHLevel);
+                        this.timeStamp.push(key.Time);
+                      });
+                    });
+
+                  }); 
+                });
+              });
+            });
+          });
+        });
+      });
     });
+    
+    /*this.firebaseDb.list('Realtime_Data', ref => ref.limitToLast(12)).snapshotChanges().map(actions =>{
+      this.timeStamp = [];
+      return actions.map(action => ({ key: action.key, ...action.payload.val()}));
+    }).subscribe(dates => {
+      dates.map(date => {
+        this.timeStamp.push(date.key);
+      });
+    });*/
+
+    /*this.firebaseDb.list('Realtime_Data', ref => ref.limitToLast(12)).valueChanges().subscribe(snapshots=>{
+      this.valueTemp = [];
+      this.valueHum = [];
+      this.valuePh = [];
+      this.result = snapshots;
+      this.result.map(key => {
+        this.valueTemp.push(key.Measured_Temp_C);
+        this.valueHum.push(key.Measured_Humidity);
+        this.valuePh.push(key.Measured_PHLevel);
+      });
+    });*/
+
 
     
 
@@ -79,59 +171,32 @@ export class MonitorPage {
         }
       });
     });*/
-    console.log(this.timeStamp);
-    console.log(this.result);
-    console.log(this.arrData);
+    //console.log(this.timeStamp);
+    //console.log(this.result);
+    console.log(this.valueTemp);
+    console.log(this.valueHum);
+    console.log(this.valuePh);
+  }
+
+  updateValues(){
+    this.lineChart.update();
   }
 
 
   ionViewDidLoad() {
-    /*this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-      type: 'doughnut',
-        data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFFF00",
-            "#008000",
-            "#800080",
-            "#FFCE56" 
-            ],
-            hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFFF00",
-            "#008000",
-            "#800080",
-            "#FFCE56"
-            ],
-                        
-       
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutoutPercentage: 30,
-        }
-                 
-      
-    });*/
-      this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+    var temp = this;
+    setInterval(function(){
+      temp.lineChart = new Chart(temp.lineCanvas.nativeElement, {
         type: 'line',
         data: {
-          //labels: this.timeStamp.toString(),
-          labels: this.value,
+          //labels: ['Jan','Feb','Mar','Aprl','May'],
+          labels: temp.timeStamp,
           datasets: [{
-            label: "Temperature Graph <3",
-            fill: false,
+            label: "Temperature",
+            fill: true,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "rgba(255,255,255,0.2)",
+            borderColor: "rgb(0,0,0)",
             borderCapStyle: 'round',
             borderDash: [],
             borderDashOffset: 0.0,
@@ -139,13 +204,14 @@ export class MonitorPage {
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "rgb(0,0,0)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 4,
             pointHitRadius: 10,
-            data: this.result,
+            data: temp.valueTemp,
+            //data: ['5','10','15','20','25'],  
             spanGaps: false,
           }]
         },
@@ -154,9 +220,17 @@ export class MonitorPage {
           maintainAspectRatio: false,
           scales: {
             yAxes: [{
-                //type: 'category',
-                labels: this.result,
-            }]
+              ticks: {
+                beginAtZero: false,
+                max: 30,
+                min: 0
+              },
+              scaleLabel: {
+                display: true,
+                labelString: temp.dates,
+                fontSize: 20 
+              }
+            }] 
           }
           
         }
@@ -164,16 +238,18 @@ export class MonitorPage {
       });
 
 
-      this.lineChart2 = new Chart(this.lineCanvas2.nativeElement, {
+      temp.lineChart2 = new Chart(temp.lineCanvas2.nativeElement, {
         type: 'line',
         data: {
-          labels: ["Timestamp1", "Timestamp2", "Timestamp3", "Timestamp4", "Timestamp5", "Timestamp6", "Timestamp7"],
+          labels: temp.timeStamp,
+          //labels: ['Jan','Feb','Mar','Aprl','May'],
           datasets: [{
-            label: "Humidity Graph <3",
-            fill: false,
+            label: "Humidity",
+            fill: true,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "rgba(255,255,255,0.2)",
+            //borderColor: "rgba(75,192,192,1)",
+            borderColor: "rgb(0,0,0)",
             borderCapStyle: 'round',
             borderDash: [],
             borderDashOffset: 0.0,
@@ -181,13 +257,14 @@ export class MonitorPage {
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "rgb(0,0,0)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 4,
             pointHitRadius: 10,
-            data: [50, 57, 63, 70, 80, 68, 60],
+            data: temp.valueHum,
+            //data: ['55','60','65','70','75'],
             spanGaps: false,
           }]
         },
@@ -196,8 +273,16 @@ export class MonitorPage {
           maintainAspectRatio: false,
           scales: {
             yAxes: [{
-                //type: 'category',
-                labels: ['80', '75', '70', '65', '60', '55', '50'],
+              ticks: {
+                beginAtZero: false,
+                max: 100,
+                min: 50
+              },
+              scaleLabel: {
+                display: true,
+                labelString: temp.dates,
+                fontSize: 20 
+              }
             }]
           }
           
@@ -207,16 +292,17 @@ export class MonitorPage {
 
 
 
-      this.lineChart3 = new Chart(this.lineCanvas3.nativeElement, {
+      temp.lineChart3 = new Chart(temp.lineCanvas3.nativeElement, {
         type: 'line',
         data: {
-          labels: ["Timestamp1", "Timestamp2", "Timestamp3", "Timestamp4", "Timestamp5", "Timestamp6", "Timestamp7"],
+          labels: temp.timeStamp,
+          //labels: ['Jan','Feb','Mar','Aprl','May'],
           datasets: [{
-            label: "pH Graph <3",
-            fill: false,
+            label: "Acidity",
+            fill: true,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "rgba(255,255,255,0.2)",
+            borderColor: "rgb(0,0,0)",
             borderCapStyle: 'round',
             borderDash: [],
             borderDashOffset: 0.0,
@@ -224,13 +310,14 @@ export class MonitorPage {
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "rgb(0,0,0)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 4,
             pointHitRadius: 10,
-            data: [3, 6, 4, 5, 9, 7, 8],
+            data: temp.valuePh,
+            //data: ['2','4','6','8','10'],
             spanGaps: false,
           }]
         },
@@ -239,8 +326,16 @@ export class MonitorPage {
           maintainAspectRatio: false,
           scales: {
             yAxes: [{
-                //type: 'category',
-                labels: ['9', '8', '7', '6', '5', '4', '3'],
+              ticks: {
+                beginAtZero: false,
+                max: 15,
+                min: 0
+              },
+              scaleLabel: {
+                display: true,
+                labelString: temp.dates,
+                fontSize: 20 
+              }
             }]
           }
           
@@ -248,10 +343,15 @@ export class MonitorPage {
       
       });
     
-
+      temp.lineChart.update();
+      temp.lineChart2.update();
+      temp.lineChart3.update();
+    }, 5000);
+    
   }
   
 
 }
+
 
 

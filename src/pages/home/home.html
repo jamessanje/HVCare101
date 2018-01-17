@@ -13,9 +13,9 @@
 
 
 <ion-content padding class="bg">
-  
-  <img src="/assets/imgs/HVCcare.png">
-
+  <ion-title class="logo">
+  <br><br><br><br>
+  </ion-title>
   <h4 class="center">Crops To Be Monitored</h4>
   <ion-list>
   <ion-item>
@@ -76,9 +76,17 @@
   </ion-item>
   </ion-list>
 
-  <button class="right" ion-button icon-start (click)="doConfirm()">
+  <button class="right"  ion-button (click)="doConfirm()" disabled={{buttonDisabled}}>
     <ion-icon name='checkmark'></ion-icon>
     Done
   </button>
+  <br>
+  <br>
+  <br>
+
+  <div class="chart-containerHome">
+    <canvas #lineCanvasHome></canvas>
+  </div>
+
 </ion-content>
 

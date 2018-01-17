@@ -174,11 +174,29 @@ ion-card-header.ph{
 ion-card-content.ph{
     //background: #C8C8A9;
 }
-.chart-container {
+.chart-containerTemp{
     position: relative;
     margin: auto;
     height: 60vh;
-    width: 80vw;
-  }
+    //width: 80vw;
+    width: auto;
+    margin-left: -5%;
+}
+.chart-containerHum{
+    position: relative;
+    margin: auto;
+    height: 70vh;
+    //width: 80vw;
+    width: auto;
+    margin-left: -5%;
+}
+.chart-containerPh{
+    position: relative;
+    margin: auto;
+    height: 60vh;
+    width: auto;
+    //width: 80vw;
+    margin-left: -5%;
+}
   
 

@@ -53,7 +53,7 @@
       <ion-card-content class="temperature">
         <ion-label class="measuredTemp" > {{sensor_temperature}}</ion-label>
         <p class="text-left">Optimal Temperature: </p> <ion-label class="optTemp"> {{temperature}}</ion-label>
-          <div class="chart-container">
+          <div class="chart-containerTemp">
             <canvas #lineCanvas></canvas>
           </div>
       </ion-card-content>
@@ -68,7 +68,7 @@
       <ion-card-content class="humidity">
         <ion-label class="measuredHum"> {{sensor_humidity}}</ion-label>
         <p class="text-left">Optimal Humidity: </p> <ion-label class="optHum"> {{humidity}}</ion-label>
-          <div class="chart-container">
+          <div class="chart-containerHum">
             <canvas #lineCanvas2></canvas>
           </div>
       </ion-card-content>
@@ -83,7 +83,7 @@
       <ion-card-content class="ph">
         <ion-label class="measuredPh"> {{sensor_acidity}}</ion-label>
         <p class="text-left">Optimal PhLevel: </p> <ion-label class="optPh"> {{acidity}}</ion-label>
-          <div class="chart-container">
+          <div class="chart-containerPh">
             <canvas #lineCanvas3></canvas>
           </div>
       </ion-card-content>
