@@ -2,6 +2,8 @@ page-monitor {
 
 }
 
+
+
 .cards-bg{
     
     .card-params {
@@ -198,5 +200,29 @@ ion-card-content.ph{
     //width: 80vw;
     margin-left: -5%;
 }
+
+.tempToggle{
+    margin-left: 71%;
+    margin-top: -12%;
+}
+
+
+.phUpToggle{
+    margin-left: 47%;
+    margin-top: -12%;
+}
+
+.phDownToggle{
+    margin-left: 77%;
+    margin-top: -9.5%;
+}
+
+$colors: (
+    primary:#48B0F7,
+    secondary:#10CFBD,
+    tempToggleColor:#F51515
+ )
+
+ 
   
 

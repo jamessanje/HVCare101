@@ -52,7 +52,8 @@
       </ion-card-header>
       <ion-card-content class="temperature">
         <ion-label class="measuredTemp" > {{sensor_temperature}}</ion-label>
-        <p class="text-left">Optimal Temperature: </p> <ion-label class="optTemp"> {{temperature}}</ion-label>
+        <p class="text-left">Optimal Temperature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cooler Status:  </p> <ion-label class="optTemp"> {{lowest_temperature}} - {{highest_temperature}}</ion-label>
+        <ion-toggle class="tempToggle" [(ngModel)]="Toggle" color="dark" disabled="true"></ion-toggle>
           <div class="chart-containerTemp">
             <canvas #lineCanvas></canvas>
           </div>
@@ -67,7 +68,8 @@
       </ion-card-header>
       <ion-card-content class="humidity">
         <ion-label class="measuredHum"> {{sensor_humidity}}</ion-label>
-        <p class="text-left">Optimal Humidity: </p> <ion-label class="optHum"> {{humidity}}</ion-label>
+        <p class="text-left">Optimal Humidity: </p> <ion-label class="optHum"> {{lowest_humidity}} - {{highest_humidity}}</ion-label>
+  
           <div class="chart-containerHum">
             <canvas #lineCanvas2></canvas>
           </div>
@@ -82,7 +84,9 @@
       </ion-card-header>
       <ion-card-content class="ph">
         <ion-label class="measuredPh"> {{sensor_acidity}}</ion-label>
-        <p class="text-left">Optimal PhLevel: </p> <ion-label class="optPh"> {{acidity}}</ion-label>
+        <p class="text-left">Optimal PhLevel: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Up Status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Down Status:</p> <ion-label class="optPh"> {{lowest_acidity}} - {{highest_acidity}}</ion-label>
+        <ion-toggle class="phUpToggle" [(ngModel)]="TogglePhUp" color="dark" disabled="true"></ion-toggle>
+        <ion-toggle class="phDownToggle" [(ngModel)]="TogglePhDown" color="dark" disabled="true"></ion-toggle> 
           <div class="chart-containerPh">
             <canvas #lineCanvas3></canvas>
           </div>

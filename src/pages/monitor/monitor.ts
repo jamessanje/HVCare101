@@ -29,6 +29,17 @@ export class MonitorPage {
   cropName1 = ""
   cropName2 = ""
   cropName3 = ""
+
+  highest_acidity = ""
+  lowest_acidity = ""
+  highest_humidity = ""
+  lowest_humidity = ""
+  highest_temperature = ""
+  lowest_temperature = ""
+
+  Toggle: boolean;
+  TogglePhUp: boolean;
+  TogglePhDown: boolean;
   
 
   @ViewChild('lineCanvas') lineCanvas;
@@ -44,16 +55,31 @@ export class MonitorPage {
 
  
   constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase){
-    
+    this.Toggle = true;
+    this.TogglePhUp = true;
+    this.TogglePhDown = false;
+
     this.firebaseDb.list('/Sensor_Data').valueChanges().subscribe(snapshots=>{
     this.arrData = snapshots;
   
+    // this.sensor_humidity = this.arrData[0];
+    // this.sensor_acidity = this.arrData[1];
+    // this.sensor_temperature = this.arrData[2];
+    // this.humidity = this.arrData[3];
+    // this.acidity = this.arrData[4];
+    // this.temperature = this.arrData[5];
     this.sensor_humidity = this.arrData[0];
     this.sensor_acidity = this.arrData[1];
     this.sensor_temperature = this.arrData[2];
     this.humidity = this.arrData[3];
-    this.acidity = this.arrData[4];
-    this.temperature = this.arrData[5];
+    this.highest_humidity = this.arrData[4];
+    this.lowest_humidity = this.arrData[5];
+    this.acidity = this.arrData[6];
+    this.highest_acidity = this.arrData[7];
+    this.lowest_acidity = this.arrData[8];
+    this.temperature = this.arrData[9];
+    this.highest_temperature = this.arrData[10];
+    this.lowest_temperature = this.arrData[11];
     });
     
     this.firebaseDb.list('/Crop_Data/Crop_Name').valueChanges().subscribe(snapshots=>{

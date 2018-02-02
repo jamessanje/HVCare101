@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MonitorPage } from '../pages/monitor/monitor';
 import { AboutPage } from '../pages/about/about';
+import { ControlPage } from '../pages/control/control';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,6 +41,7 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     MonitorPage,
+    ControlPage,
     AboutPage
   ],
   imports: [
@@ -54,6 +56,7 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     MonitorPage,
+    ControlPage,
     AboutPage
   ],
   providers: [
