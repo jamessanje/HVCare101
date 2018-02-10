@@ -53,7 +53,7 @@
       <ion-card-content class="temperature">
         <ion-label class="measuredTemp" > {{sensor_temperature}}</ion-label>
         <p class="text-left">Optimal Temperature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cooler Status:  </p> <ion-label class="optTemp"> {{lowest_temperature}} - {{highest_temperature}}</ion-label>
-        <ion-toggle class="tempToggle" [(ngModel)]="Toggle" color="dark" disabled="true"></ion-toggle>
+        <ion-toggle class="tempToggle" [(ngModel)]="temp_Statusbtn" color="dark" disabled="true"></ion-toggle>
           <div class="chart-containerTemp">
             <canvas #lineCanvas></canvas>
           </div>
@@ -85,8 +85,8 @@
       <ion-card-content class="ph">
         <ion-label class="measuredPh"> {{sensor_acidity}}</ion-label>
         <p class="text-left">Optimal PhLevel: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Up Status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Down Status:</p> <ion-label class="optPh"> {{lowest_acidity}} - {{highest_acidity}}</ion-label>
-        <ion-toggle class="phUpToggle" [(ngModel)]="TogglePhUp" color="dark" disabled="true"></ion-toggle>
-        <ion-toggle class="phDownToggle" [(ngModel)]="TogglePhDown" color="dark" disabled="true"></ion-toggle> 
+        <ion-toggle class="phUpToggle" [(ngModel)]="phUp_Statusbtn" color="dark" disabled="true"></ion-toggle>
+        <ion-toggle class="phDownToggle" [(ngModel)]="phDown_Statusbtn" color="dark" disabled="true"></ion-toggle> 
           <div class="chart-containerPh">
             <canvas #lineCanvas3></canvas>
           </div>

@@ -30,6 +30,15 @@ export class MonitorPage {
   cropName2 = ""
   cropName3 = ""
 
+  Cooler_Status = ""
+  phDown_Status = ""
+  phUp_Status = ""
+
+  temp_Statusbtn = true;
+  phUp_Statusbtn = true;
+  phDown_Statusbtn = true;
+  
+
   highest_acidity = ""
   lowest_acidity = ""
   highest_humidity = ""
@@ -37,9 +46,7 @@ export class MonitorPage {
   highest_temperature = ""
   lowest_temperature = ""
 
-  Toggle: boolean;
-  TogglePhUp: boolean;
-  TogglePhDown: boolean;
+
   
 
   @ViewChild('lineCanvas') lineCanvas;
@@ -52,6 +59,7 @@ export class MonitorPage {
 
   arrData: any;
   arrName: any;
+  arrStatus: any;
 
  
   constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase){
@@ -90,6 +98,38 @@ export class MonitorPage {
 
   
     });
+
+
+
+
+
+    this,firebaseDb.list('/Actuator_Status/Monitor').valueChanges().subscribe(snapshots=>{
+      this.arrStatus = snapshots;
+      this.Cooler_Status = this.arrStatus[0];
+      this.phDown_Status = this.arrStatus[1];
+      this.phUp_Status = this.arrStatus[2];
+      
+      if(this.Cooler_Status == "1"){
+        this.temp_Statusbtn = true;
+      }
+      else{
+        this.temp_Statusbtn = null;
+      }
+      if(this.phDown_Status == "1"){
+        this.phDown_Statusbtn = true;
+      }
+      else{
+        this.phDown_Statusbtn = null;
+      }
+      if(this.phUp_Status == "1"){
+        this.phUp_Statusbtn = true;
+      }
+      else{
+        this.phUp_Statusbtn = null;
+      }
+    });
+    
+
     
     var datem = "";
     var year = "";
@@ -203,6 +243,7 @@ export class MonitorPage {
     console.log(this.valueHum);
     console.log(this.valuePh);
   }
+  
 
   updateValues(){
     this.lineChart.update();
