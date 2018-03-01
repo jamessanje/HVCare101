@@ -63,9 +63,9 @@ export class MonitorPage {
 
  
   constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase){
-    this.Toggle = true;
-    this.TogglePhUp = true;
-    this.TogglePhDown = false;
+    // this.temp_Statusbtn = true;
+    // this.phUp_Statusbtn = true;
+    // this.phDown_Statusbtn = false;
 
     this.firebaseDb.list('/Sensor_Data').valueChanges().subscribe(snapshots=>{
     this.arrData = snapshots;
