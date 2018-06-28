@@ -80,6 +80,16 @@ ion-card-header.monitorBG{
     text-align: left;
     -webkit-text-fill-color: white;
 }
+.text_OnOff{
+    margin-left: 51%;
+    margin-top: -3%;
+    -webkit-text-fill-color: white;
+}
+.text_OnOff_ph{
+    margin-left: 42%;
+    margin-top: -3%;
+    -webkit-text-fill-color: white;
+}
 ion-label.measuredTemp{
     position: relative;
     text-align: left;
@@ -202,18 +212,23 @@ ion-card-content.ph{
 }
 
 .tempToggle{
-    margin-left: 71%;
-    margin-top: -12%;
+    margin-left: 56%;
+    margin-top: -10.5%;
+}
+
+.tempToggle2{
+    margin-left: 77%;
+    margin-top: -10%;
 }
 
 
 .phUpToggle{
-    margin-left: 47%;
-    margin-top: -12%;
+    margin-left: 50%;
+    margin-top: -10.5%;
 }
 
 .phDownToggle{
-    margin-left: 77%;
+    margin-left: 76%;
     margin-top: -9.5%;
 }
 

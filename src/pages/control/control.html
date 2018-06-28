@@ -11,6 +11,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
   <ion-title><ion-icon name="switch"></ion-icon> Control</ion-title>
+  <ion-buttons end>
+      <button ion-button icon-only (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   
 </ion-header>
@@ -27,7 +32,7 @@
     <ion-card-content>
       <p>Measured: {{sensor_temperature}} </p>
       <p>Optimal: {{lowest_temperature}} - {{highest_temperature}}</p>
-      <div class="setControl">
+      <!--<div class="setControl">
           Set:
         <button class="buttonUp" ion-button color="light" icon-only ion-button (click)="setTempUp()">
           <ion-icon name='arrow-up'></ion-icon>
@@ -36,7 +41,7 @@
         <button class="buttonDown" ion-button color="light" icon-only ion-button (click)="setTempDown()">
           <ion-icon name='arrow-down'></ion-icon>
         </button>
-      </div>
+      </div>-->
     </ion-card-content>
 
   </ion-card>
@@ -49,7 +54,7 @@
       <ion-card-content>
         <p>Measured: {{sensor_acidity}} </p>
         <p>Optimal: {{lowest_acidity}} - {{highest_acidity}} </p>
-        <div class="setControl">
+        <!--<div class="setControl">
             Set:
           <button class="buttonUp" ion-button color="light" icon-only ion-button (click)="setPhUp()">
             <ion-icon name='arrow-up'></ion-icon>
@@ -58,7 +63,7 @@
           <button class="buttonDown" ion-button color="light" icon-only ion-button (click)="setPhDown()">
             <ion-icon name='arrow-down'></ion-icon>
           </button>
-        </div>
+        </div>-->
       </ion-card-content>
   
     </ion-card>
@@ -72,38 +77,45 @@
     <ion-label>
       Actuator Status
     </ion-label>
+      
       <ion-item>
         <ion-label>Cooler</ion-label>
-        <ion-toggle [(ngModel)]="Toggle" (ionChange)="notify()"></ion-toggle>
+        <ion-toggle [(ngModel)]="ToggleCooler" (ionChange)="notify()"></ion-toggle>
       </ion-item>
-    
+
       <ion-item>
-        <ion-label>Grow Light</ion-label>
-        <ion-toggle ></ion-toggle>
+        <ion-label>Cooler 2</ion-label>
+        <ion-toggle [(ngModel)]="ToggleCooler2" (ionChange)="notify()"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>pH Up</ion-label>
-        <ion-toggle ></ion-toggle>
+        <ion-toggle [(ngModel)]="TogglePhUp" (ionChange)="notify()"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>pH Down</ion-label>
-        <ion-toggle ></ion-toggle>
+        <ion-toggle [(ngModel)]="TogglePhDown" (ionChange)="notify()"></ion-toggle>
+      </ion-item>
+    
+      
+      <ion-item>
+        <ion-label>Water Pump</ion-label>
+        <ion-toggle [(ngModel)]="ToggleWaterPump" (ionChange)="notify()"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Water Pump</ion-label>
-        <ion-toggle ></ion-toggle>
+        <ion-label>Nutrients</ion-label>
+        <ion-toggle [(ngModel)]="ToggleNutrients" (ionChange)="notify()"></ion-toggle>
       </ion-item>
 
   </ion-list>
   </ion-card-content>
   </ion-card>
-
+  <!--
   <button class="submitControl"  ion-button (click)="doConfirm()" disabled={{buttonDisabled}}>
     <ion-icon name='checkmark'></ion-icon>
     Done
   </button>
-
+-->
 </ion-content>

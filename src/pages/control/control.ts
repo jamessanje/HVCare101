@@ -2,6 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the ControlPage page.
@@ -38,18 +39,25 @@ export class ControlPage {
   highest_temperature = ""
   lowest_temperature = ""
 
-  Toggle: boolean;
+  ToggleCooler: boolean;
+  ToggleCooler2: boolean;
   TogglePhUp: boolean;
   TogglePhDown: boolean;
+  ToggleWaterPump: boolean;
+  ToggleNutrients: boolean;
 
   arrData: any;
+  arrStatus: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseDb: AngularFireDatabase, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseDb: AngularFireDatabase, public alertCtrl: AlertController, public authProvider: AuthProvider) {
     this.setTemperature = "";
     this.setAcidity = "";
-    this.Toggle = true;
-    this.TogglePhUp = true;
+    this.ToggleCooler = false;
+    this.ToggleCooler2 = false;
+    this.TogglePhUp = false;
     this.TogglePhDown = false;
+    this.ToggleWaterPump = false;
+    this.ToggleNutrients = false;
 
     
     this.firebaseDb.list('/Sensor_Data').valueChanges().subscribe(snapshots=>{
@@ -79,7 +87,19 @@ export class ControlPage {
       this.sensor_temperature2 = this.arrData[1];
       
   
-      });
+    });
+
+    this.firebaseDb.list('/Actuator_Status/Monitor').valueChanges().subscribe(snapshots=>{
+      this.arrStatus = snapshots;
+      this.ToggleCooler= this.arrStatus[0];
+      this.ToggleCooler2 = this.arrStatus[1];
+      this.ToggleNutrients = this.arrStatus[2];
+      this.ToggleWaterPump = this.arrStatus[3];
+      this.TogglePhDown = this.arrStatus[4];
+      this.TogglePhUp = this.arrStatus[5];
+
+
+    });
 
   }
 
@@ -88,7 +108,19 @@ export class ControlPage {
   }
 
   notify(){
-    console.log("Toggled: "+ this.Toggle);
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "Cooler_Status": ""+this.ToggleCooler });
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "Cooler_Status_2": ""+this.ToggleCooler2});
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "phUp_Status": ""+this.TogglePhUp});
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "phDown_Status": ""+this.TogglePhDown }); 
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "Waterpump_Status": ""+this.ToggleWaterPump });
+    this.firebaseDb.list("/Actuator_Status/").update('Monitor', { "Solution_Status": ""+this.ToggleNutrients});
+    
+    console.log("Toggled 1: "+ this.ToggleCooler);
+    console.log("Toggled 2: "+ this.ToggleCooler2);
+    console.log("Toggled 3: "+ this.TogglePhUp);
+    console.log("Toggled 4: "+ this.TogglePhDown);
+    console.log("Toggled 5: "+ this.ToggleWaterPump);
+    console.log("Toggled 6: "+ this.ToggleNutrients);
   }
 
   setTempUp(){
@@ -124,7 +156,7 @@ export class ControlPage {
     this.firebaseDb.list('/Sensor_Data').update("Set", {"Set_Acidity" : this.sensor_acidity2});
   }
 
-  doConfirm() {
+/*  doConfirm() {
     let confirm = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Are you sure you want to set these changes?',
@@ -141,6 +173,7 @@ export class ControlPage {
             //console.log('Agree clicked');
             this.updateSet();
             this.Confirmed();
+            this.notify();
           }
         }
       ]
@@ -152,6 +185,55 @@ export class ControlPage {
     let confirmed = this.alertCtrl.create({
       title: '',
       message: 'The changes have been set!',
+      buttons: [
+        {
+          text: 'Done',
+          handler: () => {
+            console.log('Done clicked');
+            
+          }
+        }
+      ]
+    });
+    confirmed.present()
+  }*/
+  
+  async logOut(): Promise<void> {
+    this.ConfirmLogOut();
+    //await this.authProvider.logoutUser();
+    //this.navCtrl.setRoot('LoginPage');
+  }
+
+  ConfirmLogOut(){
+    let confirm = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            //console.log('Agree clicked');
+            this.ConfirmedLogOut;
+            this.authProvider.logoutUser();
+            this.navCtrl.setRoot('LoginPage');
+          }
+        }
+      ]
+    });
+    confirm.present()
+
+  }
+
+  ConfirmedLogOut(){
+    let confirmed = this.alertCtrl.create({
+      title: '',
+      message: 'You have logged out!',
       buttons: [
         {
           text: 'Done',

@@ -4,6 +4,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title><ion-icon name="desktop"></ion-icon> Monitor</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="logOut()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -51,9 +56,11 @@
         <h1 class="card-params">TEMPERATURE</h1> 
       </ion-card-header>
       <ion-card-content class="temperature">
-        <ion-label class="measuredTemp" > {{sensor_temperature}}</ion-label>
-        <p class="text-left">Optimal Temperature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cooler Status:  </p> <ion-label class="optTemp"> {{lowest_temperature}} - {{highest_temperature}}</ion-label>
-        <ion-toggle class="tempToggle" [(ngModel)]="temp_Statusbtn" color="dark" disabled="true"></ion-toggle>
+        <ion-label class="measuredTemp" > 17.27 </ion-label>
+        <p class="text-left">Optimal Temperature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cooler Status:  </p> <ion-label class="optTemp"> {{lowest_temperature}} - {{highest_temperature}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1st &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2nd</ion-label>
+        <ion-toggle class="tempToggle" [(ngModel)]="ToggleCooler" color="dark" disabled="false"></ion-toggle>
+        <ion-toggle class="tempToggle2" [(ngModel)]="ToggleCooler2" color="dark" disabled="false"></ion-toggle>
+        <ion-label class="text_OnOff">OFF &nbsp; ON &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OFF &nbsp; ON</ion-label>
           <div class="chart-containerTemp">
             <canvas #lineCanvas></canvas>
           </div>
@@ -83,10 +90,11 @@
         <h1 class="card-params">ACIDITY </h1 >
       </ion-card-header>
       <ion-card-content class="ph">
-        <ion-label class="measuredPh"> {{sensor_acidity}}</ion-label>
-        <p class="text-left">Optimal PhLevel: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Up Status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PH Down Status:</p> <ion-label class="optPh"> {{lowest_acidity}} - {{highest_acidity}}</ion-label>
-        <ion-toggle class="phUpToggle" [(ngModel)]="phUp_Statusbtn" color="dark" disabled="true"></ion-toggle>
-        <ion-toggle class="phDownToggle" [(ngModel)]="phDown_Statusbtn" color="dark" disabled="true"></ion-toggle> 
+        <ion-label class="measuredPh"> 6.01</ion-label>
+        <p class="text-left">Optimal PhLevel: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Status:</p> <ion-label class="optPh"> {{lowest_acidity}} - {{highest_acidity}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pH Up &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pH Down</ion-label>
+        <ion-toggle class="phUpToggle" [(ngModel)]="TogglePhUp" color="dark" disabled="false"></ion-toggle>
+        <ion-toggle class="phDownToggle" [(ngModel)]="TogglePhDown" color="dark" disabled="false"></ion-toggle> 
+        <ion-label class="text_OnOff_ph">OFF &nbsp; ON &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OFF &nbsp; ON</ion-label>
           <div class="chart-containerPh">
             <canvas #lineCanvas3></canvas>
           </div>

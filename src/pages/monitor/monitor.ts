@@ -2,6 +2,8 @@ import { Component,  Injectable, ViewChild } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Chart } from 'chart.js';
+import { AuthProvider } from '../../providers/auth/auth';
+import { AlertController } from 'ionic-angular';
 
 Chart.defaults.global.defaultFontColor = 'black'
 
@@ -31,13 +33,14 @@ export class MonitorPage {
   cropName3 = ""
 
   Cooler_Status = ""
+  Cooler_Status_2 = ""
   phDown_Status = ""
   phUp_Status = ""
 
-  temp_Statusbtn = true;
-  phUp_Statusbtn = true;
-  phDown_Statusbtn = true;
-  
+  ToggleCooler: boolean;
+  ToggleCooler2: boolean;
+  TogglePhUp: boolean;
+  TogglePhDown: boolean;
 
   highest_acidity = ""
   lowest_acidity = ""
@@ -62,10 +65,15 @@ export class MonitorPage {
   arrStatus: any;
 
  
-  constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase){
+  constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase, public alertCtrl: AlertController, public authProvider: AuthProvider){
     // this.temp_Statusbtn = true;
     // this.phUp_Statusbtn = true;
     // this.phDown_Statusbtn = false;
+
+    this.ToggleCooler = false;
+    this.ToggleCooler2 = false;
+    this.TogglePhUp = false;
+    this.TogglePhDown = false;
 
     this.firebaseDb.list('/Sensor_Data').valueChanges().subscribe(snapshots=>{
     this.arrData = snapshots;
@@ -103,30 +111,14 @@ export class MonitorPage {
 
 
 
-    this,firebaseDb.list('/Actuator_Status/Monitor').valueChanges().subscribe(snapshots=>{
+    this.firebaseDb.list('/Actuator_Status/Monitor').valueChanges().subscribe(snapshots=>{
       this.arrStatus = snapshots;
-      this.Cooler_Status = this.arrStatus[0];
-      this.phDown_Status = this.arrStatus[1];
-      this.phUp_Status = this.arrStatus[2];
+      this.ToggleCooler= this.arrStatus[0];
+      this.ToggleCooler2 = this.arrStatus[1];
+      this.TogglePhDown = this.arrStatus[4];
+      this.TogglePhUp = this.arrStatus[5];
+
       
-      if(this.Cooler_Status == "1"){
-        this.temp_Statusbtn = true;
-      }
-      else{
-        this.temp_Statusbtn = null;
-      }
-      if(this.phDown_Status == "1"){
-        this.phDown_Statusbtn = true;
-      }
-      else{
-        this.phDown_Statusbtn = null;
-      }
-      if(this.phUp_Status == "1"){
-        this.phUp_Statusbtn = true;
-      }
-      else{
-        this.phUp_Statusbtn = null;
-      }
     });
     
 
@@ -415,6 +407,55 @@ export class MonitorPage {
       temp.lineChart3.update();
     }, 5000);
     
+  }
+
+  async logOut(): Promise<void> {
+    this.ConfirmLogOut();
+    //await this.authProvider.logoutUser();
+    //this.navCtrl.setRoot('LoginPage');
+  }
+
+  ConfirmLogOut(){
+    let confirm = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            //console.log('Agree clicked');
+            this.ConfirmedLogOut;
+            this.authProvider.logoutUser();
+            this.navCtrl.setRoot('LoginPage');
+          }
+        }
+      ]
+    });
+    confirm.present()
+
+  }
+
+  ConfirmedLogOut(){
+    let confirmed = this.alertCtrl.create({
+      title: '',
+      message: 'You have logged out!',
+      buttons: [
+        {
+          text: 'Done',
+          handler: () => {
+            console.log('Done clicked');
+            
+          }
+        }
+      ]
+    });
+    confirmed.present()
   }
   
 

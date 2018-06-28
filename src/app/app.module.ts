@@ -17,7 +17,7 @@ import { AngularFireModule } from 'angularfire2';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 //import { GlobalVars } from '../providers/globalVars';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
-
+import { AuthProvider } from '../providers/auth/auth';
 
 
 export const firebaseConfig = {
@@ -66,9 +66,9 @@ export const firebaseConfig = {
     GlobalVarsProvider,
     //GlobalVars,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    
-    
-    
+    AuthProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+  
+}

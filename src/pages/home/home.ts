@@ -1,6 +1,7 @@
 import { Component, Injectable, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthProvider } from '../../providers/auth/auth';
 import { AlertController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 
@@ -28,7 +29,8 @@ export class HomePage {
   @ViewChild('lineCanvasHome') lineCanvasHome;
   lineChartHome: any;
 
-  constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public firebaseDb: AngularFireDatabase, public alertCtrl: AlertController,
+    public authProvider: AuthProvider) {
     this.crop1 = "";
     this.crop2 = "";
     this.crop3 = "";
@@ -325,5 +327,53 @@ export class HomePage {
   
   }
 
+  async logOut(): Promise<void> {
+    this.ConfirmLogOut();
+    //await this.authProvider.logoutUser();
+    //this.navCtrl.setRoot('LoginPage');
+  }
+
+  ConfirmLogOut(){
+    let confirm = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            //console.log('Agree clicked');
+            this.ConfirmedLogOut;
+            this.authProvider.logoutUser();
+            this.navCtrl.setRoot('LoginPage');
+          }
+        }
+      ]
+    });
+    confirm.present()
+
+  }
+
+  ConfirmedLogOut(){
+    let confirmed = this.alertCtrl.create({
+      title: '',
+      message: 'You have logged out!',
+      buttons: [
+        {
+          text: 'Done',
+          handler: () => {
+            console.log('Done clicked');
+            
+          }
+        }
+      ]
+    });
+    confirmed.present()
+  }
 
 }
